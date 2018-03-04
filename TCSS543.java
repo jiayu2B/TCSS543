@@ -18,6 +18,7 @@
 //                            `=---='    
 //                God protect this program from BUG
 //         .............................................    
+package TCSS543_3edition;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -51,18 +52,20 @@ class Vertex{
 class TCSS543{
 	static HashMap color_map = new HashMap();
 	public static void main(String[] args) throws IOException {
-		String str = "The test start" +"\r\n";
+		double density = 0.3;
+		String str = "The density of edge is : "+density +"\r\n";
 		String time;
 		String color;
-		int [] nums = new int []{10, 15, 20, 30, 40, 60, 100, 150, 200, 300, 400};
-		int [] edge_nums = new int []{100, 150, 200, 300, 400, 600, 1000, 1500, 2000, 3000, 4000};
+		int [] nums = new int []{10, 15, 20, 30, 40, 60, 100, 150, 200};
 		for (int i = 0; i < nums.length; i ++) {
+			
 			long time_every_test = 0;
 			long color_every_test = 0;
 			int testtime = 100;
 			for (int j = 0; j < testtime; j ++){
-				time_every_test += TCSS543.Tcss(nums[i], edge_nums[i])[0];
-				color_every_test += TCSS543.Tcss(nums[i], edge_nums[i])[1];
+				long [] tem = TCSS543.Tcss(nums[i], density);
+				time_every_test += tem[0];
+				color_every_test += tem[1];
 				color_map.clear();
 			}
 			float out_color = color_every_test;
@@ -71,7 +74,6 @@ class TCSS543{
 			color = String.valueOf(out_color/testtime);
 			str += "test "+ i + " : " +"\r\n";
 			str += "The number of vertex : " +nums[i] + "\r\n";
-			str += "The number of edges : " +edge_nums[i] + "\r\n";
 			str += "The time of coloring : " +time +"ms"+ "\r\n";
 			str += "The number of color been used : " +color + "\r\n";
 		}
@@ -84,7 +86,7 @@ class TCSS543{
         out.write(str);
         out.close();
 	}
-	public static long[] Tcss(int num, int edge_num) {
+	public static long[] Tcss(int num, double density) {
 		
 		
 		Vertex[] vertex = new Vertex[num];
@@ -97,7 +99,7 @@ class TCSS543{
 		
 		//assign edge
 		int [][] Edge = null;
-		Edge = TCSS543.new_assign_edge(num, edge_num);
+		Edge = TCSS543.create_edge(num, density);
 		
 		//assign adjacent	
 		for(int i = 0; i < num; i++){
@@ -173,7 +175,45 @@ class TCSS543{
 		long [] res= new long [] {(System.currentTimeMillis()-a), color_beenused.length};
 		return  res;
 	}
+	public static int [][] create_edge(int num, double density)  {
+		int [][] t = TCSS543.two_dimension(num);
+		t = TCSS543.dense(t,density);
+		return t;
+	}
 	
+	public static int[][] dense(int[][] t, double density) {
+		int [][] res = new int [0][0];
+		for (int i = 0; i < t.length; i ++) {
+			double possi = Math.random();
+			if (density > possi) {
+				int[] element = new int [2];
+				element[0] = t[i][0];
+				element[1] = t[i][1];
+				res = test.insert_twi_array(res, element, res.length);
+			}
+			
+		}
+		return res;
+	}
+	public static int[][] two_dimension(int num) {
+		int [] ori = new int [num];
+		int [][] res = new int [0][0];
+		for (int i = 0; i < num; i ++) {
+			ori[i] = i;
+		}
+		int len =num*(num-1)/2;
+		
+		int t = 0;
+		for (int i = 0; i < num; i ++) {
+			for (int j = i+1; j < num; j ++) {
+				int [] a = new int [] {i, j};
+			
+				res = array_operation.insert_twi_array( res, a, res.length);
+			}
+		}
+		
+		return res;
+	}
 ///////////////////////////////////////
 	public static int find_next(int[] sort_array, int[] colored_vertex) {
 
@@ -374,17 +414,22 @@ class array_operation{
 	        return max;  
 	    }  
 	 
-	public static int[][] insert_twi_array(int original[][], int[] element, int index) {
-		
-    	int length = original.length;
-    	int destination[][] = new int[length + 1][2];
-    	System.arraycopy(original, 0, destination, 0, index);
-    	destination[index][0] = element[0];
-    	destination[index][1] = element[1];
-    	System.arraycopy(original, index, destination, index + 1, length - index);
-    	return destination;
-	   
-	}
+	 public static int[][] insert_twi_array(int original[][], int[] element, int index) {
+			if (index == 0) {
+				int[][] a = new int [1][2];
+				a[0][0] = element[0];
+				a[0][1] = element[1];
+				return a;
+			}
+			int length = original.length;
+			int destination[][] = new int[length + 1][2];
+			System.arraycopy(original, 0, destination, 0, index);
+			destination[index][0] = element[0];
+			destination[index][1] = element[1];
+			System.arraycopy(original, index, destination, index + 1, length - index);
+			return destination;
+		   
+		}
 	public static int[] insertElement(int original[], int element, int index) {
 		if (IntStream.of(original).anyMatch(a -> a == element)) {
 			return original;
