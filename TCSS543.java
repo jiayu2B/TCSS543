@@ -77,7 +77,7 @@ class TCSS543{
 			str += "The time of coloring : " +time +"ms"+ "\r\n";
 			str += "The number of color been used : " +color + "\r\n";
 		}
-		File file = new File("D:" + File.separator + "demo" + File.separator + "test.txt");
+		File file = new File("C:" + File.separator + "Documents and Settings" + File.separator + "Administrator" +  File.separator + "Desktop" + File.separator + "test.txt");
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
