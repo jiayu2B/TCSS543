@@ -18,7 +18,7 @@
 //                            `=---='    
 //                God protect this program from BUG
 //         .............................................    
-package TCSS543_3edition;
+package TCSS543;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -77,7 +77,7 @@ class TCSS543{
 			str += "The time of coloring : " +time +"ms"+ "\r\n";
 			str += "The number of color been used : " +color + "\r\n";
 		}
-		File file = new File("C:" + File.separator + "Documents and Settings" + File.separator + "Administrator" +  File.separator + "Desktop" + File.separator + "output.txt");
+		File file = new File("C:" + File.separator + "Documents and Settings" + File.separator + "Administrator" +  File.separator + "Desktop" + File.separator + args[0]);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
@@ -189,7 +189,7 @@ class TCSS543{
 				int[] element = new int [2];
 				element[0] = t[i][0];
 				element[1] = t[i][1];
-				res = test.insert_twi_array(res, element, res.length);
+				res = array_operation.insert_twi_array(res, element, res.length);
 			}
 			
 		}
