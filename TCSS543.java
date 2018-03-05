@@ -52,7 +52,7 @@ class Vertex{
 class TCSS543{
 	static HashMap color_map = new HashMap();
 	public static void main(String[] args) throws IOException {
-		double density = 0.3;
+		double density = 0.5;
 		String str = "The density of edge is : "+density +"\r\n";
 		String time;
 		String color;
@@ -77,7 +77,7 @@ class TCSS543{
 			str += "The time of coloring : " +time +"ms"+ "\r\n";
 			str += "The number of color been used : " +color + "\r\n";
 		}
-		File file = new File("C:" + File.separator + "Documents and Settings" + File.separator + "Administrator" +  File.separator + "Desktop" + File.separator + "test.txt");
+		File file = new File("C:" + File.separator + "Documents and Settings" + File.separator + "Administrator" +  File.separator + "Desktop" + File.separator + "output.txt");
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
